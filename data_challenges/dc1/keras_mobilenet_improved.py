@@ -46,7 +46,7 @@ X_train = double_dimensions(X_train, dim)
 
 # The Input Layer: accepts 56 by 56 images
 input_image = Input(shape=(dim*2,dim*2))
-# Adding image channel to data
+# Adding image channels to data
 input_image_dim = Lambda(lambda x: K.repeat_elements(K.expand_dims(x,3),3,3))(input_image)
 # Using MobileNet as the pre-trained base model
 base_model = MobileNet(input_tensor=input_image_dim, include_top=False, pooling='avg')
@@ -60,7 +60,7 @@ model = Model(inputs=input_image, outputs=predict)
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 #model.summary()
 
-model.fit(X_train, Y_train, batch_size=64, epochs=10)
+model.fit(X_train, Y_train, batch_size=200, epochs=50)
 
 # Predicting labels on the test set
 test_set = pd.read_csv("test_data.csv", index_col=0, dtype='int')
@@ -73,4 +73,4 @@ Y_predicted = Y_probs.argmax(axis=-1)
 # Creating the submission
 mn_sel_submit = pd.DataFrame({'ids': [i for i in range(10000)],
                              'label': Y_predicted}, dtype=int)
-mn_sel_submit.to_csv('mn_predictions.csv', index=False)
+mn_sel_submit.to_csv('improved_mn_predictions.csv', index=False)
