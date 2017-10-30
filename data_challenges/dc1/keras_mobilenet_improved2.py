@@ -60,7 +60,7 @@ model = Model(inputs=input_image, outputs=predict)
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 #model.summary()
 
-model.fit(X_train, Y_train, batch_size=200, epochs=11)
+model.fit(X_train, Y_train, batch_size=200, epochs=13)
 
 # Predicting labels on the test set
 test_set = pd.read_csv("test_data.csv", index_col=0, dtype='int')
